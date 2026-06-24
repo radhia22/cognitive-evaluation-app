@@ -1,0 +1,6 @@
+{
+  "name": "NeuroPsych - التقييم العصبي النفسي",
+  "description": "A comprehensive neuropsychological assessment tool for working memory and inhibition tests, supporting doctors and patients in Arabic and French.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

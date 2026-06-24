@@ -1,0 +1,69 @@
+{
+  "entities": {
+    "Doctor": {
+      "title": "Doctor",
+      "description": "Information about the professional administering tests.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Doctor's full name" },
+        "email": { "type": "string", "format": "email", "description": "Doctor's email address" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account creation timestamp" }
+      },
+      "required": ["name", "email", "createdAt"]
+    },
+    "Patient": {
+      "title": "Patient",
+      "description": "Patient metadata and clinical context.",
+      "type": "object",
+      "properties": {
+        "doctorId": { "type": "string", "description": "ID of the doctor managing this patient" },
+        "name": { "type": "string", "description": "Patient's name or initials" },
+        "age": { "type": "number", "description": "Patient's age" },
+        "injuryType": { "type": "string", "description": "Type of injury or condition" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["doctorId", "name", "age", "injuryType", "createdAt"]
+    },
+    "TestAssignment": {
+      "title": "Test Assignment",
+      "description": "A set of tests assigned to a patient.",
+      "type": "object",
+      "properties": {
+        "patientId": { "type": "string" },
+        "testIds": { "type": "array", "items": { "type": "string" } },
+        "status": { "type": "string", "enum": ["pending", "completed"] },
+        "assignedAt": { "type": "string", "format": "date-time" },
+        "completedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["patientId", "testIds", "status", "assignedAt"]
+    },
+    "TestResult": {
+      "title": "Test Result",
+      "description": "The outcome of a specific neuropsychological test.",
+      "type": "object",
+      "properties": {
+        "assignmentId": { "type": "string" },
+        "patientId": { "type": "string" },
+        "testType": { "type": "string" },
+        "metrics": {
+          "type": "object",
+          "properties": {
+            "averageReactionTime": { "type": "number" },
+            "errorCount": { "type": "number" },
+            "correctCount": { "type": "number" },
+            "accuracy": { "type": "number" }
+          }
+        },
+        "rawData": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["assignmentId", "patientId", "testType", "metrics", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/doctors/{doctorId}": { "schema": "Doctor", "description": "Doctor profile data" },
+    "/patients/{patientId}": { "schema": "Patient", "description": "Patient profiles" },
+    "/assignments/{assignmentId}": { "schema": "TestAssignment", "description": "Assigned test batteries" },
+    "/testResults/{resultId}": { "schema": "TestResult", "description": "Aggregated test scores" }
+  }
+}
